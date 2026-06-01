@@ -2,7 +2,7 @@ import ScheduleClient from '@/components/schedule/ScheduleClient'
 import { CalendarEvents } from '@/types/View'
 
 async function getEvents() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/schedule`)
+    const res = await fetch(`${process.env.API_BASE_URL}/api/schedule`)
     return res.json()
 }
 

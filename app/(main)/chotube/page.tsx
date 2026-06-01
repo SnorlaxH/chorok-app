@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ChotubeData } from '@/types/Common';
 
 export default async function ChotubePage() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/youtube`);
+    const res = await fetch(`${process.env.API_BASE_URL}/api/youtube`);
     const { data } = await res.json()
 
     return (

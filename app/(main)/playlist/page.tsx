@@ -2,7 +2,7 @@ import { PlaylistFilter, PlaylistItem } from '@/types/View';
 import PlaylistClient from './PlaylistClient';
 
 export default async function PlaylistPage() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/playlist`);
+    const res = await fetch(`${process.env.API_BASE_URL}/api/playlist`);
     const { data } = await res.json()
 
     const filter: PlaylistFilter = {
