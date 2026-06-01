@@ -1,14 +1,24 @@
 import ScheduleClient from '@/components/schedule/ScheduleClient'
 import { CalendarEvents } from '@/types/View'
 
-async function getEvents() {
-    const res = await fetch(`${process.env.API_BASE_URL}/api/schedule`)
-    return res.json()
+async function getData(): Promise<(CalendarEvents & { _id: string })[]> {
+    try {
+        const res = await fetch(`${process.env.API_BASE_URL}/api/youtube`, {
+            next: { revalidate: 600 },
+            signal: AbortSignal.timeout(5000)
+        });
+        const { data } = await res.json()
+
+        return Array.isArray(data) ? data : [];
+    } catch (e) {
+        console.error('Failed to fetch CalendarEvents data:', e);
+        return [];
+    }
 }
 
-export default async function SchdeuldePage() {
-    const res = await getEvents()
-    const events: CalendarEvents[] = res.data.map((r: CalendarEvents & { _id: string }) => {
+export default async function SchedulePage() {
+    const data = await getData()
+    const events: CalendarEvents[] = data.map((r: CalendarEvents & { _id: string }) => {
         const date = new Date(r.date);
         return {
             ...r,

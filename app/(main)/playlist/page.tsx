@@ -1,9 +1,23 @@
 import { PlaylistFilter, PlaylistItem } from '@/types/View';
 import PlaylistClient from './PlaylistClient';
 
+async function getData(): Promise<PlaylistItem[]> {
+    try {
+        const res = await fetch(`${process.env.API_BASE_URL}/api/playlist`, {
+            next: { revalidate: 600 },
+            signal: AbortSignal.timeout(5000)
+        });
+        const { data } = await res.json()
+
+        return Array.isArray(data) ? data : [];
+    } catch (e) {
+        console.error('Failed to fetch Playlist data:', e);
+        return [];
+    }
+}
+
 export default async function PlaylistPage() {
-    const res = await fetch(`${process.env.API_BASE_URL}/api/playlist`);
-    const { data } = await res.json()
+    const data = await getData();
 
     const filter: PlaylistFilter = {
         artist: {},

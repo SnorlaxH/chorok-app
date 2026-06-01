@@ -4,10 +4,23 @@ import { MoveRight } from 'lucide-react';
 import Link from 'next/link';
 import { ChotubeData } from '@/types/Common';
 
-export default async function ChotubePage() {
-    const res = await fetch(`${process.env.API_BASE_URL}/api/youtube`);
-    const { data } = await res.json()
+async function getData(): Promise<ChotubeData[]> {
+    try {
+        const res = await fetch(`${process.env.API_BASE_URL}/api/youtube`, {
+            next: { revalidate: 600 },
+            signal: AbortSignal.timeout(5000)
+        });
+        const { data } = await res.json()
 
+        return Array.isArray(data) ? data : [];
+    } catch (e) {
+        console.error('Failed to fetch Chotube data:', e);
+        return [];
+    }
+}
+
+export default async function ChotubePage() {
+    const data = await getData();
     return (
         <>
             <div className={`w-full h-full flex p-4 lg:p-8`}>
