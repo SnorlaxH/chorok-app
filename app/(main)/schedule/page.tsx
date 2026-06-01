@@ -8,6 +8,7 @@ async function getData(): Promise<(CalendarEvents & { _id: string })[]> {
         const res = await fetch(`${process.env.API_BASE_URL}/api/schedule`, {
             next: { revalidate: 600 }
         });
+        console.log(res.url, res.status);
         const { data } = await res.json()
 
         return Array.isArray(data) ? data : [];
