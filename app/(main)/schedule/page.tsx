@@ -1,6 +1,8 @@
 import ScheduleClient from '@/components/schedule/ScheduleClient'
 import { CalendarEvents } from '@/types/View'
 
+export const maxDuration = 60;
+
 async function getData(): Promise<(CalendarEvents & { _id: string })[]> {
     try {
         const res = await fetch(`${process.env.API_PROTOCOL || 'https://'}${process.env.API_BASE_URL}/api/schedule`, {
