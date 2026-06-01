@@ -18,11 +18,9 @@
   --main-light-color: #c9ece6;
   --main-color: #A8D8CF;
   --main-deep-color: #6FAEA3;
-  --sub-light-color: #ceb9e7;
   --sub-color: #B79AD9;
   --point-color: #F6C95B;
   --samsung-blue-color: #0064B2;
-  --shadow-top-lg: 0 -10px 15px -3px var(--tw-shadow-color,#0000001a), 0 4px 6px -4px var(--tw-shadow-color,#0000001a)
 }
 
 @theme inline {
