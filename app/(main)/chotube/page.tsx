@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 async function getData(): Promise<ChotubeData[]> {
     try {
-        const res = await fetch(`${process.env.API_BASE_URL}/api/youtube`, {
+        const res = await fetch(`${process.env.API_PROTOCOL || 'https://'}${process.env.API_BASE_URL}/api/youtube`, {
             next: { revalidate: 600 },
         });
         const { data } = await res.json()
