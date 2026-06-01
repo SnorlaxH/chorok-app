@@ -4,8 +4,6 @@ import { MoveRight } from 'lucide-react';
 import Link from 'next/link';
 import { ChotubeData } from '@/types/Common';
 
-export const dynamic = 'force-dynamic'
-
 async function getData(): Promise<ChotubeData[]> {
     try {
         const res = await fetch(`${process.env.API_PROTOCOL || 'https://'}${process.env.API_BASE_URL}/api/youtube`, {

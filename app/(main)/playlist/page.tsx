@@ -1,8 +1,6 @@
 import { PlaylistFilter, PlaylistItem } from '@/types/View';
 import PlaylistClient from './PlaylistClient';
 
-export const dynamic = 'force-dynamic'
-
 async function getData(): Promise<PlaylistItem[]> {
     try {
         const res = await fetch(`${process.env.API_PROTOCOL || 'https://'}${process.env.API_BASE_URL}/api/playlist`, {
