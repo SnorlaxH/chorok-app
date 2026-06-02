@@ -4,46 +4,17 @@ import { CalendarEvents } from '@/types/View'
 export const maxDuration = 60;
 
 async function getData(): Promise<(CalendarEvents & { _id: string })[]> {
-    const apiBaseUrl = process.env.API_BASE_URL;
-
-    if (!apiBaseUrl) {
-        throw new Error('API_BASE_URL 환경 변수가 설정되지 않았습니다.');
-    }
-
-    const url = new URL('/api/schedule', apiBaseUrl);
-
-    console.log('[schedule] upstream request:', url.toString());
-
     try {
-        const res = await fetch(url, {
-            next: { revalidate: 600 },
-            headers: {
-                Accept: 'application/json',
-            },
+        const res = await fetch(`${process.env.API_PROTOCOL || 'https://'}${process.env.API_BASE_URL}/api/schedule`, {
+            next: { revalidate: 600 }
         });
-
-        console.log('[schedule] upstream response:', res.status);
-
-        if (!res.ok) {
-            throw new Error(`외부 API 응답 오류: ${res.status} ${res.statusText}`);
-        }
-
-        const { data } = await res.json();
+        console.log(res.url, res.status);
+        const { data } = await res.json()
 
         return Array.isArray(data) ? data : [];
-    } catch (error) {
-        const cause =
-            error instanceof Error && 'cause' in error
-                ? error.cause
-                : undefined;
-
-        console.error('[schedule] upstream fetch failed:', {
-            url: url.toString(),
-            error,
-            cause,
-        });
-
-        throw error;
+    } catch (e) {
+        console.error('Failed to fetch CalendarEvents data:', e);
+        return [];
     }
 }
 
